@@ -1,5 +1,10 @@
 # gpu-text-harvest
 
+[![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
+[![Poetry](https://img.shields.io/badge/packaging-poetry-cyan.svg)](https://python-poetry.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![NVIDIA GPU](https://img.shields.io/badge/NVIDIA-GraceBlackwell-76B900.svg)](https://www.nvidia.com/)
+
 GPU-accelerated PDF text extraction using [marker-pdf](https://github.com/VikParuchuri/marker). Optimized for NVIDIA GraceBlackwell.
 
 ## Installation
