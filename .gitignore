@@ -1,4 +1,5 @@
 config.sh
 poetry.lock
 test_output/
+output/
 __pycache__/

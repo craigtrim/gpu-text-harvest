@@ -27,7 +27,9 @@ if tmux has-session -t harvest 2>/dev/null; then
 fi
 
 tmux new-session -d -s harvest \
-    "poetry run marker $INPUT_DIR \
+    "source ~/miniconda3/etc/profile.d/conda.sh && \
+    conda activate harvest && \
+    marker $INPUT_DIR \
     --output_dir ./output \
     --workers 20 \
     --output_format markdown \

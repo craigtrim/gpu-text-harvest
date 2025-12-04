@@ -1,0 +1,12 @@
+name: harvest
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.11
+  - pytorch=2.7.1=cuda129*
+  - cuda-cudart
+  - cudnn
+  - pip
+  - pip:
+      - marker-pdf
