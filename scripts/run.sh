@@ -2,7 +2,23 @@
 # Start PDF extraction in a tmux session
 # Usage: ./run.sh
 
-cd /home/craigtrim/projects/gpu-text-harvest
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PROJECT_DIR="$(dirname "$SCRIPT_DIR")"
+CONFIG_FILE="$PROJECT_DIR/config.sh"
+
+if [[ ! -f "$CONFIG_FILE" ]]; then
+    echo "Missing config.sh - copy from config.sh.example and set INPUT_DIR"
+    exit 1
+fi
+
+source "$CONFIG_FILE"
+
+if [[ -z "$INPUT_DIR" ]]; then
+    echo "INPUT_DIR not set in config.sh"
+    exit 1
+fi
+
+cd "$PROJECT_DIR"
 
 if tmux has-session -t harvest 2>/dev/null; then
     echo "Session 'harvest' already running!"
@@ -11,7 +27,7 @@ if tmux has-session -t harvest 2>/dev/null; then
 fi
 
 tmux new-session -d -s harvest \
-    "poetry run marker /home/craigtrim/data/maryville/transcripts/ \
+    "poetry run marker $INPUT_DIR \
     --output_dir ./output \
     --workers 20 \
     --output_format markdown \

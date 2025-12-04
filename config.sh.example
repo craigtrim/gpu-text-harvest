@@ -1,0 +1,2 @@
+# Copy to config.sh and set your input directory
+INPUT_DIR="/path/to/your/pdfs"
