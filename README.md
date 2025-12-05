@@ -1,38 +1,48 @@
 # gpu-text-harvest
 
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
-[![Poetry](https://img.shields.io/badge/packaging-poetry-cyan.svg)](https://python-poetry.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![NVIDIA GPU](https://img.shields.io/badge/NVIDIA-GraceBlackwell-76B900.svg)](https://www.nvidia.com/)
 
-GPU-accelerated PDF text extraction using [marker-pdf](https://github.com/VikParuchuri/marker). Optimized for NVIDIA GraceBlackwell.
+Two-pass PDF text extraction and cleanup pipeline.
 
-## Installation
+## Pipeline
 
-```bash
-poetry install
+1. **Pass 1 - Extract**: Fast text extraction from PDFs using PyMuPDF (~140 files/sec)
+2. **Pass 2 - Clean**: LLM cleanup using Ollama/mistral to format as clean markdown
+
+## Structure
+
+```
+gpu-text-harvest/
+├── src/
+│   ├── extract.py    # PyMuPDF text extraction
+│   └── clean.py      # Ollama LLM cleanup
+├── scripts/
+│   ├── run-extract.sh
+│   ├── run-clean.sh
+│   └── monitor.sh
+├── output-raw/       # Pass 1 output (gitignored)
+└── output-clean/     # Pass 2 output (gitignored)
 ```
 
-## Quick Start
+## Usage
 
 ```bash
-scripts/run.sh       # Start (20 workers, skips existing)
-scripts/attach.sh    # View progress (detach: Ctrl+b d)
-scripts/kill.sh      # Stop
-```
+# Pass 1: Extract text from PDFs
+./scripts/run-extract.sh              # Full run
+./scripts/run-extract.sh -n 100       # Limit to 100 files
 
-## Direct CLI
+# Pass 2: Clean with Ollama
+./scripts/run-clean.sh                # Full run (skips existing)
+./scripts/run-clean.sh -n 50          # Limit to 50 files
+./scripts/run-clean.sh --overwrite    # Reprocess all
 
-```bash
-poetry run marker /path/to/pdfs/ \
-  --output_dir ./output \
-  --workers 20 \
-  --skip_existing \
-  --output_format markdown
+# Monitor progress
+./scripts/monitor.sh
 ```
 
 ## Requirements
 
-- Python 3.10-3.12
-- NVIDIA GPU
-- tmux
+- Python 3.10+
+- PyMuPDF (`pip install pymupdf`)
+- Ollama with mistral model (`ollama pull mistral`)

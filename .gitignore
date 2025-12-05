@@ -1,5 +1,7 @@
 config.sh
 poetry.lock
 test_output/
-output/
+output-raw/
+output-clean/
+output-legend-chunk/
 __pycache__/
